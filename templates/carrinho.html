@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Your Cart</h1>
+{% if cart_items %}
+<div class="row">
+        {% for item in cart_items %}
+            <div class="col-md-4">
+                <div class="card mb-4"> 
+                    {% if produto.imagem %}
+                        <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }}" class="card-img-top">
+                    {% else %}
+                        <img src="https://via.placeholder.com/150" class="card-img-top" alt="Produto 2">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ item.produto.nome }} x {{ item.quantidade }}</h5>
+                        <p class="card-text">{{ produto.descricao }}</p>
+                        <p>Preço: R$ {{ item.produto.preco }}</p>
+                        <a href="#" class="btn btn-primary">Ver Detalhes</a>
+                        <a href="{% url 'remove_from_cart' item.id %}">Remove</a>
+                    </div>
+                </div>        
+            </div>       
+        {% endfor %}
+</div>
+    <p>Total: ${{ total }}</p>
+{% else %}
+    <p>Your cart is empty.</p>
+{% endif %}
+{% endblock %}

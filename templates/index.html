@@ -1,13 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container mt-5">
-    <h1 class="text-center mb-4">Django-Commerce!</h1>
-    <form method="GET">
-        <input type="text" name="q" placeholder="Pesquisar por nome ou tipo">
-        <button type="submit">Pesquisar</button>
-    </form>
-    <div class="row">
+        <div class="row">
         {% for produto in produtos %}
         <div class="col-md-4">
             <div class="card mb-4"> 
@@ -21,6 +15,7 @@
                     <p class="card-text">{{ produto.descricao }}</p>
                     <p>Preço: R$ {{ produto.preco }}</p>
                     <a href="#" class="btn btn-primary">Ver Detalhes</a>
+                    <a href="{% url 'add_to_cart' produto.id %}" class="btn btn-primary" >Carrinho</a>
                     <form action="{% url 'remover_produto' produto.id %}" method="post" style="display:inline;">
                         {% csrf_token %}
                         <br></br>
@@ -33,6 +28,6 @@
         <p>Nenhum produto cadastrado ainda.</p>
         {% endfor %}
     </div>
+    <a href="{% url 'cadastro_produto' %}" class="btn btn-primary">cadastrar</a>
 </div>
-<a href="{% url 'cadastro_produto' %}" class="btn btn-primary">cadastrar</a>
 {% endblock %}

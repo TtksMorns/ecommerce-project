@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Produto
+from .models import Produto, CartItem
+from django.db.models import Q
 
 def index(request):
     produtos = Produto.objects.all()
@@ -36,7 +37,24 @@ def lista_produto(request):
 
     if query:
         produtos = produtos.filter(
-            models.Q(nome__icontains=query) | models.Q(tipo__icontains=query)
+            Q(nome__icontains=query) | Q(tipo__icontains=query)
         )
     
-    return render(request, 'lista_produto.html', {'produtos': produtos})
+    return render(request, 'index.html', {'produtos': produtos})
+
+def add_to_cart(request, produto_id):
+    produto = get_object_or_404(Produto, id=produto_id)
+    cart_item, created = CartItem.objects.get_or_create(produto=produto)
+    cart_item.quantidade += 1
+    cart_item.save()
+    return redirect('cart')
+
+def cart(request):
+    cart_items = CartItem.objects.all()
+    total = sum(item.get_total_price() for item in cart_items)
+    return render(request, 'carrinho.html', {'cart_items': cart_items, 'total': total})
+
+def remove_from_cart(request, cart_item_id):
+    cart_item = get_object_or_404(CartItem, id=cart_item_id)
+    cart_item.delete()
+    return redirect('cart')

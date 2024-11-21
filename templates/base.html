@@ -8,6 +8,20 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
+    <div class="container mt-5">
+        <div class="d-flex justify-content-end mb-3">
+                <a href="{% url 'cart' %}" class="btn btn-outline-primary">
+                    <i class="fas fa-shopping-cart"></i>
+                    Carrinho ({{ cart_items|length }})
+                </a>
+        </div>
+        <h1 class="text-center mb-4" ><a href="{% url 'index' %}">Django-Commerce!</a></h1>
+        <nav class="navbar navbar-light text-center justify-content-center">
+            <form method="GET" class="form-inline text-center ">
+                <input class="form-control mr-sm-2" type="text" name="q" placeholder="Pesquisar por nome ou tipo">
+                <a href="{% url 'lista_produto' %}" class="btn btn-primary">pesquisar</a>
+            </form>
+        </nav>
     {% block content %}
     {% endblock %}
     <!-- Bootstrap JS CDN (opcional) -->
