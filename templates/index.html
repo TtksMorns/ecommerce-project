@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Django-Commerce!</h1>
+    <form method="GET">
+        <input type="text" name="q" placeholder="Pesquisar por nome ou tipo">
+        <button type="submit">Pesquisar</button>
+    </form>
+    <div class="row">
+        {% for produto in produtos %}
+        <div class="col-md-4">
+            <div class="card mb-4"> 
+                {% if produto.imagem %}
+                <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }}" class="card-img-top">
+                {% else %}
+                <img src="https://via.placeholder.com/150" class="card-img-top" alt="Produto 2">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ produto.nome }}</h5>
+                    <p class="card-text">{{ produto.descricao }}</p>
+                    <p>Preço: R$ {{ produto.preco }}</p>
+                    <a href="#" class="btn btn-primary">Ver Detalhes</a>
+                    <form action="{% url 'remover_produto' produto.id %}" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <br></br>
+                        <button class="btn btn-primary" type="submit" onclick="return confirm('Deseja realmente remover este produto?')">Remover</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p>Nenhum produto cadastrado ainda.</p>
+        {% endfor %}
+    </div>
+</div>
+<a href="{% url 'cadastro_produto' %}" class="btn btn-primary">cadastrar</a>
+{% endblock %}
