@@ -7,14 +7,18 @@ class Produto(models.Model):
     descricao = models.TextField()
     preco = models.DecimalField(max_digits=10, decimal_places=2)
     imagem = models.ImageField(upload_to='media/', null=True)
+    data = models.DateField()
+    localizacao = models.CharField(max_length=255)
     TIPO_CHOICES = [
-        ('verdureira', 'Verdureira'),
-        ('acougue', 'Açougue'),
-        ('limpeza', 'Limpeza'),
-        ('frios', 'Frios'),
-        ('bebidas', 'Bebidas'),
+        ('show', 'Show'),
+        ('formatura', 'Formatura'),
+        ('casamento', 'Casamento'),
+        ('aniversário', 'Aniversário'),
+        ('outros', 'Outros'),
     ]
     tipo = models.CharField(max_length=20, choices=TIPO_CHOICES)
+     
+
 
     def __str__(self):
         return self.nome

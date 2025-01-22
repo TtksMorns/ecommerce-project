@@ -1,25 +1,65 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<style>
+    .event-card {
+        background-color: #221f27;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 20px;
+        transition: transform 0.2s;
+        margin: 2%;
+        padding: 8px;
+    }
+    .event-card:hover {
+        transform: scale(1.02);
+    }
+    .search-container {
+            max-width: 600px;
+            margin: 20px auto;
+    }
+    .search {
+        border-radius: 20px;
+        padding: 10px;
+        width: 100%;
+        border: 1px solid #ccc;
+    }
+    .search-button {
+        border-radius: 20px; 
+    }
+    p{
+        color: aliceblue;
+    }
+    .button-cart{
+        border-radius: 20px;
+        padding: 10px;
+        width: 100%;
+        box-shadow: 0 2px 10px rgba(10, 10, 90, 0.5);
+    }
+</style>
         <div class="row">
         {% for produto in produtos %}
         <div class="col-md-4">
-            <div class="card mb-4"> 
+            <div class="card event-card"> 
                 {% if produto.imagem %}
                 <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }}" class="card-img-top">
                 {% else %}
-                <img src="https://via.placeholder.com/150" class="card-img-top" alt="Produto 2">
+                {% load static %}
+                <img src="{% static 'img/Produto-sem-imagem.png' %}" class="card-img-top search-button" alt="Produto 2">
                 {% endif %}
                 <div class="card-body">
                     <h5 class="card-title">{{ produto.nome }}</h5>
                     <p class="card-text">{{ produto.descricao }}</p>
                     <p>Preço: R$ {{ produto.preco }}</p>
-                    <a href="#" class="btn btn-primary">Ver Detalhes</a>
-                    <a href="{% url 'add_to_cart' produto.id %}" class="btn btn-primary" >Carrinho</a>
+                    <p>Localização: {{ produto.localizacao }}</p>
+                    <p>Data: {{ produto.data }}</p>
+                    <a href="{% url 'detalhe_produto' produto.id %}" style="align-self: center;" class="">Ver Detalhes</a>
+                    <a href="{% url 'add_to_cart' produto.id %}" class="btn btn-primary btn-block button-cart" >Carrinho</a>
                     <form action="{% url 'remover_produto' produto.id %}" method="post" style="display:inline;">
                         {% csrf_token %}
                         <br></br>
+                        {% if user.is_staff %}
                         <button class="btn btn-primary" type="submit" onclick="return confirm('Deseja realmente remover este produto?')">Remover</button>
+                        {% endif %}
                     </form>
                 </div>
             </div>
@@ -28,6 +68,8 @@
         <p>Nenhum produto cadastrado ainda.</p>
         {% endfor %}
     </div>
+    {% if user.is_staff %}
     <a href="{% url 'cadastro_produto' %}" class="btn btn-primary">cadastrar</a>
+    {% endif %}
 </div>
 {% endblock %}

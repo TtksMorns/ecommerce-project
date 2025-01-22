@@ -7,19 +7,23 @@
             <!-- Exemplo de Cards de Produtos -->
             <div class="col-md-4">
                 <div class="card mb-4 al">
-                    <img src="https://via.placeholder.com/150" class="card-img-top" alt="Produto 1">
                     <div class="card-body">
                         <h5 class="card-title"><input id="nome" name="nome" class="form-control-sm" type="text" placeholder="Nome Produto" required></h5>
                         <p class="card-text"><input id="descricao" name="descricao" class="form-control-sm" type="text" placeholder="Descrição" required></p>
                         <p class="card-text"><input id="preco" name="preco" class="form-control-sm" type="number" step="0.1" placeholder="Preço" required></p>
                         <label for="tipo">Tipo:</label>
                             <select name="tipo" id="tipo" required>
-                                <option value="verdureira">Verdureira</option>
-                                <option value="acougue">Açougue</option>
-                                <option value="limpeza">Limpeza</option>
-                                <option value="frios">Frios</option>
-                                <option value="bebidas">Bebidas</option>
+                                <option value="show">Show</option>
+                                <option value="formatura">Formatura</option>
+                                <option value="casamento">Casamento</option>
+                                <option value="aniversário">Aniversário</option>
+                                <option value="outros">Outros</option>
                             </select><br>
+                            <label for="data">Data:</label>
+                            <input type="date" name="data" id="data" required>
+                            <label for="localizacao">Localização:</label>
+                            <input type="text" name="localizacao" id="localizacao" required>
+                            <br>
                         <label for="imagem">Imagem:</label>
                         <input type="file" id="imagem" name="imagem" accept="image/*">
                         <button type="submit" class="btn btn-primary">Cadastro</button>
